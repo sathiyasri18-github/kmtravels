@@ -446,3 +446,12 @@ dist/
 /src/TNCOA.Web/bin
 /publish
 /admin/snlengineering-admin/.vscode
+/.vs/KmTravels
+/src/KmTravels.Api/bin/Debug/net8.0
+/src/KmTravels.Api/obj
+/src/KmTravels.Core/bin/Debug/net8.0
+/src/KmTravels.Core/obj
+/src/KmTravels.Infrastructure/bin/Debug/net8.0
+/src/KmTravels.Infrastructure/obj
+/src/KmTravels.Web/bin/Debug/net8.0
+/src/KmTravels.Web/obj
