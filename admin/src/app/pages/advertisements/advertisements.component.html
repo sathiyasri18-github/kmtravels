@@ -1,0 +1,44 @@
+<p-toast />
+<p-confirmDialog />
+
+<div class="page-header">
+  <h1>Advertisements</h1>
+  <p-button label="Add Advertisement" icon="pi pi-plus" (onClick)="openDialog()" />
+</div>
+
+<p-table [value]="ads" styleClass="p-datatable-sm">
+  <ng-template pTemplate="header">
+    <tr><th>Title</th><th>Position</th><th>Start</th><th>End</th><th>Order</th><th>Actions</th></tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-item>
+    <tr>
+      <td>{{ item.title }}</td>
+      <td><p-tag [value]="getPositionLabel(item.position)" /></td>
+      <td>{{ item.startDate | date:'dd MMM yyyy' }}</td>
+      <td>{{ item.endDate | date:'dd MMM yyyy' }}</td>
+      <td>{{ item.sortOrder }}</td>
+      <td>
+        <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" (onClick)="edit(item)" />
+        <p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger" (onClick)="confirmDelete(item)" />
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<p-dialog [(visible)]="dialogVisible" [header]="editItem ? 'Edit Advertisement' : 'Add Advertisement'" [modal]="true" [style]="{ width: '600px' }">
+  <div class="form-grid">
+    <div class="field full"><label>Title</label><input pInputText [(ngModel)]="form.title" class="w-full" /></div>
+    <div class="field"><label>Position</label>
+      <p-select [options]="positionOptions" [(ngModel)]="form.position" optionLabel="label" optionValue="value" styleClass="w-full" />
+    </div>
+    <div class="field"><label>Sort Order</label><p-inputNumber [(ngModel)]="form.sortOrder" styleClass="w-full" /></div>
+    <div class="field"><label>Start Date</label><input type="date" [(ngModel)]="form.startDate" class="w-full date-input" /></div>
+    <div class="field"><label>End Date</label><input type="date" [(ngModel)]="form.endDate" class="w-full date-input" /></div>
+    <div class="field full"><label>Link URL</label><input pInputText [(ngModel)]="form.linkUrl" class="w-full" /></div>
+    <div class="field full"><app-file-upload label="Banner Image" folder="advertisements" [(url)]="form.imageUrl" /></div>
+  </div>
+  <ng-template pTemplate="footer">
+    <p-button label="Cancel" severity="secondary" (onClick)="dialogVisible = false" />
+    <p-button label="Save" (onClick)="save()" [loading]="saving" />
+  </ng-template>
+</p-dialog>

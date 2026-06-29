@@ -1,0 +1,51 @@
+<p-toast />
+<p-confirmDialog />
+
+<div class="page-header">
+  <h1>Leadership</h1>
+  <p-button label="Add Leader" icon="pi pi-plus" (onClick)="openDialog()" />
+</div>
+
+<p-table [value]="bearers" styleClass="p-datatable-sm">
+  <ng-template pTemplate="header">
+    <tr><th>Name</th><th>Role</th><th>Designation</th><th>District</th><th>Order</th><th>Actions</th></tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-item>
+    <tr>
+      <td>{{ item.name }}</td>
+      <td><p-tag [value]="getRoleLabel(item.role)" /></td>
+      <td>{{ item.designation || '-' }}</td>
+      <td>{{ item.district || '-' }}</td>
+      <td>{{ item.sortOrder }}</td>
+      <td>
+        <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" (onClick)="edit(item)" />
+        <p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger" (onClick)="confirmDelete(item)" />
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<p-dialog [(visible)]="dialogVisible" [header]="editItem ? 'Edit Leader' : 'Add Leader'" [modal]="true" [style]="{ width: '700px' }">
+  <div class="form-grid">
+    <div class="field"><label>Name</label><input pInputText [(ngModel)]="form.name" class="w-full" /></div>
+    <div class="field"><label>Role</label>
+      <p-select [options]="roleOptions" [(ngModel)]="form.role" optionLabel="label" optionValue="value" styleClass="w-full" />
+    </div>
+    <div class="field"><label>Designation</label><input pInputText [(ngModel)]="form.designation" class="w-full" /></div>
+    <div class="field"><label>District</label><input pInputText [(ngModel)]="form.district" class="w-full" /></div>
+    <div class="field"><label>Phone</label><input pInputText [(ngModel)]="form.phone" class="w-full" /></div>
+    <div class="field"><label>Email</label><input pInputText [(ngModel)]="form.email" class="w-full" type="email" /></div>
+    <div class="field"><label>Sort Order</label><p-inputNumber [(ngModel)]="form.sortOrder" styleClass="w-full" /></div>
+    <div class="field full">
+      <app-file-upload label="Photo" folder="office-bearers" [(url)]="form.photoUrl" />
+    </div>
+    <div class="field full">
+      <label>Bio</label>
+      <app-rich-text-editor [(ngModel)]="form.bio" height="200px" />
+    </div>
+  </div>
+  <ng-template pTemplate="footer">
+    <p-button label="Cancel" severity="secondary" (onClick)="dialogVisible = false" />
+    <p-button label="Save" (onClick)="save()" [loading]="saving" />
+  </ng-template>
+</p-dialog>

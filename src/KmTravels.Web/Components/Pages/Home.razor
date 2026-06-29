@@ -1,0 +1,307 @@
+@page "/"
+@rendermode InteractiveServer
+@implements IDisposable
+@inject ApiService Api
+
+<SeoHead Title="SNL Engineering"
+         FullTitleOverride="SNL Engineering | EPCM Engineering Consultants"
+         Description="SNL Engineering — premier Concept-to-Commissioning EPCM consultancy for power, sugar, ethanol, chemical and process industries. Multi-disciplinary engineering excellence."
+         Keywords="SNL Engineering, EPCM, engineering consultants, power plant, sugar plant, ethanol, process industries, Tamil Nadu, detailed engineering"
+         CanonicalPath="/"
+         JsonLd=@_orgJsonLd />
+
+@if (_data == null)
+{
+    <div class="loading">Loading...</div>
+}
+else
+{
+    <section class="hero-carousel">
+        @if (_slideshowImages.Count > 0)
+        {
+            @for (var i = 0; i < _slideshowImages.Count; i++)
+            {
+                var slide = _slideshowImages[i];
+                <div class="carousel-slide @(_currentSlide == i ? "active" : "")">
+                    <div class="carousel-bg" style="background-image: linear-gradient(rgba(0,30,80,0.65), rgba(0,30,80,0.65)), url('@Media.Resolve(slide.ImageUrl)')"></div>
+                </div>
+            }
+        }
+        else if (_data.Banners.Any())
+        {
+            <div class="carousel-slide active">
+                <div class="carousel-bg" style="background-image: linear-gradient(rgba(0,30,80,0.7), rgba(0,30,80,0.7)), url('@Media.Resolve(_data.Banners[0].ImageUrl)')"></div>
+            </div>
+        }
+        else
+        {
+            <div class="carousel-slide active">
+                <div class="carousel-bg hero-default"></div>
+            </div>
+        }
+
+        <div class="container carousel-content">
+            @if (_data.Banners.Any())
+            {
+                var banner = _data.Banners[_currentSlide % _data.Banners.Count];
+                <h1>@banner.Title</h1>
+                <p>@banner.Subtitle</p>
+                @if (!string.IsNullOrEmpty(banner.LinkUrl))
+                {
+                    <a href="@banner.LinkUrl" class="btn btn-primary">Learn More</a>
+                }
+            }
+            else if (_slideshowImages.Count > 0)
+            {
+                var slide = _slideshowImages[_currentSlide];
+                <h1>@slide.Title</h1>
+                <p>@(slide.Caption ?? _data.Settings?.Tagline)</p>
+                <a href="/about" class="btn btn-primary">About Us</a>
+            }
+            else
+            {
+                <h1>@(_data.Settings?.AssociationName ?? "SNL Engineering")</h1>
+                <p>@(_data.Settings?.Tagline)</p>
+                <a href="/about" class="btn btn-primary">About Us</a>
+            }
+        </div>
+
+        @if (_slideshowImages.Count > 1)
+        {
+            <div class="carousel-dots">
+                @for (var i = 0; i < _slideshowImages.Count; i++)
+                {
+                    var index = i;
+                    <button type="button" class="carousel-dot @(_currentSlide == index ? "active" : "")"
+                            aria-label="Go to slide @(index + 1)"
+                            @onclick="() => GoToSlide(index)"></button>
+                }
+            </div>
+            <button type="button" class="carousel-nav carousel-prev" aria-label="Previous slide" @onclick="PrevSlide">&#8249;</button>
+            <button type="button" class="carousel-nav carousel-next" aria-label="Next slide" @onclick="NextSlide">&#8250;</button>
+        }
+    </section>
+
+    <section class="section quick-actions">
+        <div class="container">
+            <div class="action-grid">
+                <a href="/services" class="action-card">
+                    <span class="action-icon">&#9881;</span>
+                    <h3>EPCM Services</h3>
+                    <p>Engineering, Procurement & Construction Management</p>
+                </a>
+                <a href="/services" class="action-card">
+                    <span class="action-icon">&#128200;</span>
+                    <h3>Detailed Engineering</h3>
+                    <p>Multi-disciplinary design and consultancy</p>
+                </a>
+                <a href="/projects" class="action-card">
+                    <span class="action-icon">&#127959;</span>
+                    <h3>Our Projects</h3>
+                    <p>Delivered projects across India</p>
+                </a>
+                <a href="/contact" class="action-card">
+                    <span class="action-icon">&#9993;</span>
+                    <h3>Get In Touch</h3>
+                    <p>Discuss your next engineering project</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container two-col">
+            <div>
+                <h2 class="section-title">About SNL Engineering</h2>
+                <p class="intro-text">@(_data.Settings?.AboutContent ?? "SNL Engineering is a premier engineering consultancy offering end-to-end EPCM services.")</p>
+                <a href="/about" class="btn btn-outline">Read More</a>
+            </div>
+            <div class="stats-card">
+                <div class="stat"><strong>EPCM</strong><span>End-to-End Services</span></div>
+                <div class="stat"><strong>Multi</strong><span>Disciplinary Team</span></div>
+                <div class="stat"><strong>ISO</strong><span>9001:2015 Certified</span></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section bg-light">
+        <div class="container">
+            <h2 class="section-title">Top Engineering Services</h2>
+            <div class="card-grid">
+                @foreach (var service in _services.Take(10))
+                {
+                    <article class="service-card">
+                        <a href="/services/@service.Slug" class="service-card-link">
+                            <div class="service-card-img" style="background-image: url('@Media.Resolve(service.CoverImageUrl ?? "/images/news-placeholder.jpg")')">
+                                @if (service.IsFeatured)
+                                {
+                                    <span class="service-badge">Top Rated</span>
+                                }
+                            </div>
+                            <div class="service-card-body">
+                                <h3>@service.Title</h3>
+                                @if (!string.IsNullOrEmpty(service.Subtitle))
+                                {
+                                    <p>@service.Subtitle</p>
+                                }
+                            </div>
+                        </a>
+                    </article>
+                }
+            </div>
+            <div class="text-center mt-4">
+                <a href="/services" class="btn btn-primary">View All Services</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Our Sectors</h2>
+            <div class="action-grid">
+                <div class="action-card" style="cursor: default;">
+                    <span class="action-icon">&#9889;</span>
+                    <h3>Power & Co-generation</h3>
+                    <p>Power plants, co-generation, and solar installations</p>
+                </div>
+                <div class="action-card" style="cursor: default;">
+                    <span class="action-icon">&#127806;</span>
+                    <h3>Sugar & Ethanol</h3>
+                    <p>Sugar factories, distilleries, and ethanol plants</p>
+                </div>
+                <div class="action-card" style="cursor: default;">
+                    <span class="action-icon">&#9878;</span>
+                    <h3>Chemical & Process</h3>
+                    <p>Process industries and water treatment facilities</p>
+                </div>
+                <div class="action-card" style="cursor: default;">
+                    <span class="action-icon">&#127793;</span>
+                    <h3>CBG & Renewable Energy</h3>
+                    <p>Compressed Biogas plants and green energy solutions</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Latest News & Updates</h2>
+            <div class="card-grid">
+                @foreach (var news in _data.FeaturedNews)
+                {
+                    <article class="news-card">
+                        <div class="news-card-img" style="background-image: url('@Media.Resolve(news.ImageUrl ?? "/images/news-placeholder.jpg")')"></div>
+                        <div class="news-card-body">
+                            <span class="badge">@news.Category</span>
+                            <h3><a href="/news/@news.Slug">@news.Title</a></h3>
+                            <p>@news.Summary</p>
+                            <small>@(news.PublishedAt?.ToString("dd MMM yyyy"))</small>
+                        </div>
+                    </article>
+                }
+            </div>
+            <div class="text-center mt-4">
+                <a href="/news" class="btn btn-primary">View All News</a>
+            </div>
+        </div>
+    </section>
+
+    @if (_data.UpcomingEvents.Any())
+    {
+        <section class="section bg-light">
+            <div class="container">
+                <h2 class="section-title">Upcoming Events</h2>
+                <div class="event-list">
+                    @foreach (var evt in _data.UpcomingEvents)
+                    {
+                        <div class="event-item">
+                            <div class="event-date">
+                                <strong>@evt.StartDate.Day</strong>
+                                <span>@evt.StartDate.ToString("MMM")</span>
+                            </div>
+                            <div>
+                                <h3>@evt.Title</h3>
+                                <p>@evt.Location</p>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </section>
+    }
+}
+
+@code {
+    private HomePageData? _data;
+    private List<GalleryImageDto> _slideshowImages = [];
+    private List<ServiceDto> _services = [];
+    private int _currentSlide;
+    private Timer? _timer;
+    private const int SlideIntervalMs = 6000;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _data = await Api.GetAsync<HomePageData>("api/public");
+        _slideshowImages = (await Api.GetAsync<List<GalleryImageDto>>("api/public/gallery/slideshow")) ?? [];
+        _services = _data?.Services ?? (await Api.GetAsync<List<ServiceDto>>("api/public/services?limit=10")) ?? [];
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender && _slideshowImages.Count > 1)
+            StartTimer();
+    }
+
+    private void StartTimer()
+    {
+        _timer?.Dispose();
+        _timer = new Timer(_ => InvokeAsync(() =>
+        {
+            NextSlide();
+            return Task.CompletedTask;
+        }), null, SlideIntervalMs, SlideIntervalMs);
+    }
+
+    private void NextSlide()
+    {
+        if (_slideshowImages.Count == 0) return;
+        _currentSlide = (_currentSlide + 1) % _slideshowImages.Count;
+        StateHasChanged();
+    }
+
+    private void PrevSlide()
+    {
+        if (_slideshowImages.Count == 0) return;
+        _currentSlide = (_currentSlide - 1 + _slideshowImages.Count) % _slideshowImages.Count;
+        ResetTimer();
+    }
+
+    private void GoToSlide(int index)
+    {
+        _currentSlide = index;
+        ResetTimer();
+    }
+
+    private void ResetTimer()
+    {
+        if (_slideshowImages.Count > 1)
+            StartTimer();
+    }
+
+    public void Dispose() => _timer?.Dispose();
+
+    private string _orgJsonLd => System.Text.Json.JsonSerializer.Serialize(new
+    {
+        @__context = "https://schema.org",
+        @__type = "Organization",
+        name = "SNL Engineering",
+        url = "https://snlengineers.com",
+        logo = "https://snlengineers.com/images/logo.png",
+        description = _data?.Settings?.AboutContent ?? "Premier EPCM engineering consultancy.",
+        address = new { @__type = "PostalAddress", streetAddress = _data?.Settings?.Address ?? "Chennai" },
+        telephone = _data?.Settings?.Phone ?? "+91 44 4598 1200",
+        email = _data?.Settings?.Email ?? "info@snlengineering.com",
+        sameAs = Array.Empty<string>()
+    }).Replace("\"__context\"", "\"@context\"")
+      .Replace("\"__type\"", "\"@type\"");
+}

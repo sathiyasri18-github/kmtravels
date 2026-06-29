@@ -1,0 +1,88 @@
+@inherits LayoutComponentBase
+@inject ApiService Api
+
+<div class="site-wrapper">
+    <header class="site-header">
+        <div class="header-top">
+            <div class="container header-top-inner">
+                <span>&#128222; @(_settings?.Phone ?? "+91 44 4598 1200")</span>
+                <span>&#9993; @(_settings?.Email ?? "info@snlengineering.com")</span>
+                <span class="visitor-count">&#128101; Visitors: @(_visitorStats?.TotalVisitors ?? 0) | Views: @(_visitorStats?.TotalPageViews ?? 0)</span>
+            </div>
+        </div>
+        <div class="container header-main">
+            <a href="/" class="logo">
+                <div class="logo-icon">SNL</div>
+                <div>
+                    <strong>@(_settings?.AssociationName ?? "SNL Engineering")</strong>
+                    <small>@(_settings?.Tagline ?? "EPCM Engineering Consultants")</small>
+                </div>
+            </a>
+            <SiteNav Items="_menuItems" />
+        </div>
+    </header>
+
+    <main class="site-main">
+        @Body
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <div>
+                <h4>@(_settings?.AssociationName ?? "SNL Engineering")</h4>
+                <p>@(_settings?.Tagline)</p>
+                <p>@(_settings?.Address)</p>
+                <p class="cert-badge">ISO 9001:2015 | IBR Certified Agency</p>
+            </div>
+            <div>
+                <h4>Quick Links</h4>
+                <a href="/about">About Us</a>
+                <a href="/services">Services</a>
+                <a href="/news">News</a>
+                <a href="/projects">Projects</a>
+                <a href="/contact">Contact</a>
+            </div>
+            <div>
+                <h4>Services</h4>
+                <a href="/services">Services</a>
+                <a href="/about">EPCM Services</a>
+                <a href="/about">Detailed Engineering</a>
+                <a href="/about">Project Management</a>
+                <a href="/project-inquiry">Project Enquiry</a>
+            </div>
+            <div>
+                <h4>Contact</h4>
+                <p>&#128222; @(_settings?.Phone)</p>
+                <p>&#9993; @(_settings?.Email)</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p>&copy; @DateTime.Now.Year SNL Engineering. All Rights Reserved.</p>
+                <p>
+                    Total Visitors: @(_visitorStats?.TotalVisitors ?? 0) | Page Views: @(_visitorStats?.TotalPageViews ?? 0)
+                    &nbsp;|&nbsp;
+                    <a href="/privacy">Privacy Notice</a>
+                    &nbsp;|&nbsp;
+                    <a href="/cookies">Cookies Notice</a>
+                    &nbsp;|&nbsp;
+                    <button type="button" class="footer-cookie-link" onclick="snlCookieConsent.notifyOpenSettings()">Cookie Settings</button>
+                </p>
+            </div>
+        </div>
+    </footer>
+</div>
+
+@code {
+    private SiteSettingsDto? _settings;
+    private VisitorStatsDto? _visitorStats;
+    private List<MenuItemDto> _menuItems = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        _settings = await Api.GetAsync<SiteSettingsDto>("api/public/about");
+        var home = await Api.GetAsync<HomePageData>("api/public");
+        _visitorStats = home?.VisitorStats;
+        _menuItems = (await Api.GetAsync<List<MenuItemDto>>("api/public/menu")) ?? [];
+    }
+}

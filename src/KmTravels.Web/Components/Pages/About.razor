@@ -1,0 +1,78 @@
+@page "/about"
+@inject ApiService Api
+
+<SeoHead Title="About Us"
+         Description="Learn about SNL Engineering — multi-disciplinary EPCM consultants serving power, sugar, ethanol, chemical and process industries with end-to-end engineering services."
+         Keywords="about SNL Engineering, EPCM consultants, engineering history, multi-disciplinary engineering"
+         CanonicalPath="/about" />
+
+<div class="page-header">
+    <div class="container">
+        <h1>About Us</h1>
+        <p>Concept-to-Commissioning EPCM Engineering Consultants</p>
+    </div>
+</div>
+
+<section class="section">
+    <div class="container content-page">
+        @if (_settings != null)
+        {
+            <div class="about-block">
+                <h2>Our History</h2>
+                <p>@_settings.AboutContent</p>
+            </div>
+            <div class="about-grid">
+                <div class="about-card">
+                    <h3>Vision</h3>
+                    <p>@_settings.Vision</p>
+                </div>
+                <div class="about-card">
+                    <h3>Mission</h3>
+                    <p>@_settings.Mission</p>
+                </div>
+                <div class="about-card full-width">
+                    <h3>Core Capabilities</h3>
+                    @foreach (var obj in (_settings.Objectives ?? "").Split('\n', StringSplitOptions.RemoveEmptyEntries))
+                    {
+                        <p>&#10003; @obj</p>
+                    }
+                </div>
+            </div>
+
+            <div class="about-block" style="margin-top: 3rem;">
+                <h2>Our Services</h2>
+                <div class="about-grid">
+                    <div class="about-card">
+                        <h3>Conceptual Design</h3>
+                        <p>Conceptual System Design and Techno-Economic Feasibility Reports (TEFR)</p>
+                    </div>
+                    <div class="about-card">
+                        <h3>Detailed Engineering</h3>
+                        <p>Multi-disciplinary detailed engineering across all project disciplines</p>
+                    </div>
+                    <div class="about-card">
+                        <h3>Project Management</h3>
+                        <p>End-to-end EPCM — Engineering, Procurement, and Construction Management</p>
+                    </div>
+                    <div class="about-card">
+                        <h3>Inspection & Commissioning</h3>
+                        <p>Third Party Inspection, Expediting, Construction Supervision, and Commissioning assistance</p>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <p>Loading...</p>
+        }
+    </div>
+</section>
+
+@code {
+    private SiteSettingsDto? _settings;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _settings = await Api.GetAsync<SiteSettingsDto>("api/public/about");
+    }
+}

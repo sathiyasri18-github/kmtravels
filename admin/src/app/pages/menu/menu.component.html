@@ -1,0 +1,42 @@
+<p-toast />
+<p-confirmDialog />
+
+<div class="page-header">
+  <h1>Menu Management</h1>
+  <p-button label="Add Menu Item" icon="pi pi-plus" (onClick)="openDialog()" />
+</div>
+
+<p-table [value]="flatItems" styleClass="p-datatable-sm">
+  <ng-template pTemplate="header">
+    <tr><th>Title</th><th>URL</th><th>Parent</th><th>Order</th><th>New Tab</th><th>Actions</th></tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-item>
+    <tr>
+      <td>{{ item.indent }}{{ item.title }}</td>
+      <td>{{ item.url || '-' }}</td>
+      <td>{{ item.parentTitle || 'Root' }}</td>
+      <td>{{ item.sortOrder }}</td>
+      <td>{{ item.openInNewTab ? 'Yes' : 'No' }}</td>
+      <td>
+        <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" (onClick)="edit(item)" />
+        <p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger" (onClick)="confirmDelete(item)" />
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<p-dialog [(visible)]="dialogVisible" [header]="editItem ? 'Edit Menu Item' : 'Add Menu Item'" [modal]="true" [style]="{ width: '500px' }">
+  <div class="form-grid">
+    <div class="field full"><label>Title</label><input pInputText [(ngModel)]="form.title" class="w-full" /></div>
+    <div class="field full"><label>URL</label><input pInputText [(ngModel)]="form.url" class="w-full" placeholder="/about or https://..." /></div>
+    <div class="field"><label>Parent</label>
+      <p-select [options]="parentOptions" [(ngModel)]="form.parentId" optionLabel="label" optionValue="value" styleClass="w-full" [showClear]="true" />
+    </div>
+    <div class="field"><label>Sort Order</label><p-inputNumber [(ngModel)]="form.sortOrder" styleClass="w-full" /></div>
+    <div class="field full"><p-checkbox [(ngModel)]="form.openInNewTab" [binary]="true" label="Open in new tab" /></div>
+  </div>
+  <ng-template pTemplate="footer">
+    <p-button label="Cancel" severity="secondary" (onClick)="dialogVisible = false" />
+    <p-button label="Save" (onClick)="save()" [loading]="saving" />
+  </ng-template>
+</p-dialog>

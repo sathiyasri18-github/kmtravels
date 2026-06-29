@@ -1,0 +1,87 @@
+<p-toast />
+<p-confirmDialog />
+
+<div class="page-header">
+  <h1>Project Inquiry</h1>
+  <div class="header-actions">
+    <p-button label="Refresh" icon="pi pi-refresh" severity="secondary" (onClick)="load()" />
+    <p-button label="Add Inquiry" icon="pi pi-plus" (onClick)="openDialog()" />
+  </div>
+</div>
+
+<p-table [value]="inquiries" [paginator]="true" [rows]="10" styleClass="p-datatable-sm">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Status</th>
+      <th>Contact</th>
+      <th>Email</th>
+      <th>Phone</th>
+      <th>Project Type</th>
+      <th>Date</th>
+      <th>Actions</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-item>
+    <tr [class.pending]="item.status === 1">
+      <td><p-tag [value]="getStatusLabel(item.status)" [severity]="getStatusSeverity(item.status)" /></td>
+      <td>{{ item.fullName }}</td>
+      <td>{{ item.email }}</td>
+      <td>{{ item.phone }}</td>
+      <td>{{ item.projectType || '-' }}</td>
+      <td>{{ item.createdAt | date:'dd MMM yyyy HH:mm' }}</td>
+      <td>
+        <p-button icon="pi pi-eye" [rounded]="true" [text]="true" (onClick)="view(item)" />
+        <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" (onClick)="edit(item)" />
+        <p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger" (onClick)="confirmDelete(item)" />
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<p-dialog [(visible)]="viewDialog" header="Project Inquiry Details" [modal]="true" [style]="{ width: '560px' }">
+  @if (selected) {
+    <p><strong>Contact:</strong> {{ selected.fullName }}</p>
+    <p><strong>Email:</strong> {{ selected.email }}</p>
+    <p><strong>Phone:</strong> {{ selected.phone }}</p>
+    @if (selected.companyName) { <p><strong>Company:</strong> {{ selected.companyName }}</p> }
+    @if (selected.city) { <p><strong>City:</strong> {{ selected.city }}</p> }
+    @if (selected.state) { <p><strong>State / Country:</strong> {{ selected.state }}</p> }
+    @if (selected.projectType) { <p><strong>Project Type:</strong> {{ selected.projectType }}</p> }
+    <p><strong>Status:</strong> {{ getStatusLabel(selected.status) }}</p>
+    @if (selected.projectDetails) {
+      <p><strong>Project Details:</strong></p>
+      <p class="details">{{ selected.projectDetails }}</p>
+    }
+    @if (selected.notes) {
+      <p><strong>Internal Notes:</strong></p>
+      <p class="details">{{ selected.notes }}</p>
+    }
+  }
+</p-dialog>
+
+<p-dialog [(visible)]="dialogVisible" [header]="editItem ? 'Edit Project Inquiry' : 'Add Project Inquiry'" [modal]="true" [style]="{ width: '700px' }">
+  <div class="form-grid">
+    <div class="field"><label>Contact Name *</label><input pInputText [(ngModel)]="form.fullName" class="w-full" /></div>
+    <div class="field"><label>Email *</label><input pInputText [(ngModel)]="form.email" class="w-full" type="email" /></div>
+    <div class="field"><label>Phone *</label><input pInputText [(ngModel)]="form.phone" class="w-full" /></div>
+    <div class="field"><label>Company</label><input pInputText [(ngModel)]="form.companyName" class="w-full" /></div>
+    <div class="field"><label>City</label><input pInputText [(ngModel)]="form.city" class="w-full" /></div>
+    <div class="field"><label>State / Country</label><input pInputText [(ngModel)]="form.state" class="w-full" /></div>
+    <div class="field"><label>Project Type</label><input pInputText [(ngModel)]="form.projectType" class="w-full" /></div>
+    <div class="field"><label>Status</label>
+      <p-select [options]="statusOptions" [(ngModel)]="form.status" optionLabel="label" optionValue="value" styleClass="w-full" />
+    </div>
+    <div class="field full">
+      <label>Project Details</label>
+      <textarea pTextarea [(ngModel)]="form.projectDetails" rows="4" class="w-full"></textarea>
+    </div>
+    <div class="field full">
+      <label>Internal Notes</label>
+      <textarea pTextarea [(ngModel)]="form.notes" rows="3" class="w-full"></textarea>
+    </div>
+  </div>
+  <ng-template pTemplate="footer">
+    <p-button label="Cancel" severity="secondary" (onClick)="dialogVisible = false" />
+    <p-button label="Save" (onClick)="save()" [loading]="saving" />
+  </ng-template>
+</p-dialog>

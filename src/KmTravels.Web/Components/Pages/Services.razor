@@ -1,0 +1,140 @@
+@page "/services"
+@page "/services/{Slug}"
+@inject ApiService Api
+
+@if (!string.IsNullOrEmpty(Slug) && _detail != null)
+{
+    <SeoHead Title="@(_detail.MetaTitle ?? _detail.Title)"
+             Description="@_detail.MetaDescription"
+             Keywords="@_detail.MetaKeywords"
+             Image="@(!string.IsNullOrEmpty(_detail.CoverImageUrl) ? Media.Resolve(_detail.CoverImageUrl) : null)"
+             CanonicalPath="@($"/services/{_detail.Slug}")" />
+
+    <div class="page-header">
+        <div class="container">
+            <a href="/services" class="back-link">← All Services</a>
+            <h1>@_detail.Title</h1>
+            @if (!string.IsNullOrEmpty(_detail.Subtitle))
+            {
+                <p>@_detail.Subtitle</p>
+            }
+        </div>
+    </div>
+
+    <section class="section">
+        <div class="container content-page">
+            @if (!string.IsNullOrEmpty(_detail.CoverImageUrl))
+            {
+                <img src="@Media.Resolve(_detail.CoverImageUrl)" alt="@_detail.Title" class="article-image" />
+            }
+            <div class="article-content">
+                @((MarkupString)_detail.Content)
+            </div>
+
+            @if (_detail.Images.Any())
+            {
+                <h2 class="section-title" style="margin-top: 3rem;">Service Gallery</h2>
+                <div class="gallery-grid">
+                    @foreach (var img in _detail.Images)
+                    {
+                        <div class="gallery-item">
+                            <img src="@Media.Resolve(img.ImageUrl)" alt="@img.Title" loading="lazy" />
+                            @if (!string.IsNullOrEmpty(img.Caption))
+                            {
+                                <span>@img.Caption</span>
+                            }
+                            else
+                            {
+                                <span>@img.Title</span>
+                            }
+                        </div>
+                    }
+                </div>
+            }
+
+            <div class="text-center mt-4">
+                <a href="/project-inquiry" class="btn btn-primary">Request This Service</a>
+                <a href="/contact" class="btn btn-outline" style="margin-left: 1rem;">Contact Us</a>
+            </div>
+        </div>
+    </section>
+}
+else if (!string.IsNullOrEmpty(Slug))
+{
+    <div class="section"><div class="container"><p>Service not found.</p></div></div>
+}
+else
+{
+    <SeoHead Title="Our Services"
+             Description="Top engineering services by SNL Engineering — EPCM, detailed engineering, project management, feasibility studies, IBR inspection and commissioning across India."
+             Keywords="EPCM services, detailed engineering, project management, feasibility study, IBR inspection, commissioning, SNL Engineering"
+             CanonicalPath="/services" />
+
+    <div class="page-header">
+        <div class="container">
+            <h1>Our Services</h1>
+            <p>Top-rated engineering solutions for power, process, and industrial sectors</p>
+        </div>
+    </div>
+
+    <section class="section">
+        <div class="container">
+            @if (_loading)
+            {
+                <p class="loading">Loading services...</p>
+            }
+            else if (_services.Count == 0)
+            {
+                <p class="loading">No services available. Ensure the API is running at the configured ApiBaseUrl.</p>
+            }
+            else
+            {
+            <div class="card-grid">
+                @foreach (var service in _services)
+                {
+                    <article class="service-card">
+                        <a href="/services/@service.Slug" class="service-card-link">
+                            <div class="service-card-img" style="background-image: url('@Media.Resolve(service.CoverImageUrl ?? "/images/news-placeholder.jpg")')">
+                                @if (service.IsFeatured)
+                                {
+                                    <span class="service-badge">Top Rated</span>
+                                }
+                            </div>
+                            <div class="service-card-body">
+                                <h3>@service.Title</h3>
+                                @if (!string.IsNullOrEmpty(service.Subtitle))
+                                {
+                                    <p>@service.Subtitle</p>
+                                }
+                                <small>@service.ImageCount gallery images</small>
+                            </div>
+                        </a>
+                    </article>
+                }
+            </div>
+            }
+        </div>
+    </section>
+}
+
+@code {
+    [Parameter] public string? Slug { get; set; }
+
+    private List<ServiceDto> _services = [];
+    private ServiceDetailDto? _detail;
+    private bool _loading = true;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _loading = true;
+        if (!string.IsNullOrEmpty(Slug))
+        {
+            _detail = await Api.GetAsync<ServiceDetailDto>($"api/public/services/{Slug}");
+        }
+        else
+        {
+            _services = (await Api.GetAsync<List<ServiceDto>>("api/public/services")) ?? [];
+        }
+        _loading = false;
+    }
+}

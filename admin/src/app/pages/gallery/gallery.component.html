@@ -1,0 +1,99 @@
+<p-toast />
+<p-confirmDialog />
+
+<div class="page-header">
+  <h1>Projects Management</h1>
+  <p-button label="Add Album" icon="pi pi-plus" (onClick)="openAlbumDialog()" />
+</div>
+
+<p-table [value]="albums" styleClass="p-datatable-sm">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Title</th>
+      <th>Category</th>
+      <th>Images</th>
+      <th>Event Date</th>
+      <th style="width: 10rem">Actions</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-album>
+    <tr>
+      <td>{{ album.title }}</td>
+      <td>{{ album.category || '-' }}</td>
+      <td>{{ album.imageCount }}</td>
+      <td>{{ album.eventDate | date:'dd MMM yyyy' }}</td>
+      <td>
+        <p-button icon="pi pi-images" [rounded]="true" [text]="true" pTooltip="Manage Images" (onClick)="manageImages(album)" />
+        <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" (onClick)="editAlbum(album)" />
+        <p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger" (onClick)="confirmDeleteAlbum(album)" />
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<p-dialog [(visible)]="albumDialogVisible" [header]="editAlbumItem ? 'Edit Album' : 'Add Album'"
+          [modal]="true" [style]="{ width: '600px' }">
+  <div class="form-grid">
+    <div class="field full">
+      <label>Title</label>
+      <input pInputText [(ngModel)]="albumForm.title" class="w-full" />
+    </div>
+    <div class="field full">
+      <label>Description</label>
+      <app-rich-text-editor [(ngModel)]="albumForm.description" height="200px" />
+    </div>
+    <div class="field">
+      <label>Category</label>
+      <input pInputText [(ngModel)]="albumForm.category" class="w-full" placeholder="Events, Meetings, etc." />
+    </div>
+    <div class="field">
+      <label>Event Date</label>
+      <input type="date" [(ngModel)]="albumForm.eventDate" class="w-full date-input" />
+    </div>
+  </div>
+  <ng-template pTemplate="footer">
+    <p-button label="Cancel" severity="secondary" (onClick)="albumDialogVisible = false" />
+    <p-button label="Save" (onClick)="saveAlbum()" [loading]="saving" />
+  </ng-template>
+</p-dialog>
+
+<p-dialog [(visible)]="imagesDialogVisible" [header]="'Images: ' + (selectedAlbum?.title || '')"
+          [modal]="true" [style]="{ width: '800px' }" [maximizable]="true">
+  <div class="image-form">
+    <h4>Add Image</h4>
+    <div class="form-grid">
+      <div class="field">
+        <label>Title</label>
+        <input pInputText [(ngModel)]="imageForm.title" class="w-full" />
+      </div>
+      <div class="field">
+        <label>Sort Order</label>
+        <p-inputNumber [(ngModel)]="imageForm.sortOrder" styleClass="w-full" />
+      </div>
+      <div class="field full">
+        <app-file-upload label="Image" folder="gallery" [(url)]="imageForm.imageUrl" />
+      </div>
+      <div class="field full">
+        <label>Caption</label>
+        <input pInputText [(ngModel)]="imageForm.caption" class="w-full" />
+      </div>
+    </div>
+    <p-button label="Add Image" icon="pi pi-plus" (onClick)="addImage()" [loading]="addingImage" class="mb-3" />
+  </div>
+
+  <p-table [value]="images" styleClass="p-datatable-sm">
+    <ng-template pTemplate="header">
+      <tr><th>Preview</th><th>Title</th><th>Order</th><th>Actions</th></tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-img>
+      <tr>
+        <td><img [src]="img.imageUrl" alt="" class="thumb" /></td>
+        <td>{{ img.title }}</td>
+        <td>{{ img.sortOrder }}</td>
+        <td>
+          <p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger" (onClick)="deleteImage(img)" />
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-dialog>

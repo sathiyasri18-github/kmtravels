@@ -1,0 +1,151 @@
+@page "/sectors"
+@page "/sectors/{Slug}"
+@inject ApiService Api
+
+@if (!string.IsNullOrEmpty(Slug) && _detail != null)
+{
+    <SeoHead Title="@(_detail.MetaTitle ?? _detail.Title)"
+             Description="@_detail.MetaDescription"
+             Keywords="@_detail.MetaKeywords"
+             Image="@(!string.IsNullOrEmpty(_detail.CoverImageUrl) ? Media.Resolve(_detail.CoverImageUrl) : null)"
+             CanonicalPath="@($"/sectors/{_detail.Slug}")" />
+
+    <div class="page-header">
+        <div class="container">
+            <a href="/sectors" class="back-link">← All Sectors</a>
+            <h1>@_detail.Title</h1>
+            @if (!string.IsNullOrEmpty(_detail.Subtitle))
+            {
+                <p>@_detail.Subtitle</p>
+            }
+        </div>
+    </div>
+
+    <section class="section">
+        <div class="container">
+            <div class="content-page sector-detail">
+
+                <div class="article-content">
+                    @((MarkupString)_detail.Content)
+                </div>
+                @if (!string.IsNullOrEmpty(_detail.CoverImageUrl))
+                {
+                    <figure class="sector-cover">
+                        <img src="@Media.Resolve(_detail.CoverImageUrl)" alt="@_detail.Title" class="article-image" />
+                    </figure>
+                }
+
+
+                @if (_detail.Images.Any())
+                {
+                    <h2 class="section-title" style="margin-top: 3rem;">Sector Gallery</h2>
+                    <div class="gallery-grid">
+                        @foreach (var img in _detail.Images)
+                        {
+                            <div class="gallery-item">
+                                <img src="@Media.Resolve(img.ImageUrl)" alt="@img.Title" loading="lazy" />
+                                @if (!string.IsNullOrEmpty(img.Caption))
+                                {
+                                    <span>@img.Caption</span>
+                                }
+                                else
+                                {
+                                    <span>@img.Title</span>
+                                }
+                            </div>
+                        }
+                    </div>
+                }
+
+                <div class="text-center mt-4">
+                    <a href="/project-inquiry" class="btn btn-primary">Discuss Your Project</a>
+                    <a href="/contact" class="btn btn-outline" style="margin-left: 1rem;">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+else if (!string.IsNullOrEmpty(Slug))
+{
+    <div class="section">
+        <div class="container">
+            <p>Sector not found.</p>
+        </div>
+    </div>
+}
+else
+{
+    <SeoHead Title="Industry Sectors"
+             Description="Industry sectors served by SNL Engineering — power, oil &amp; gas, petrochemical, refinery, water treatment, chemical, pharmaceutical, paper &amp; pulp, and buildings."
+             Keywords="engineering sectors, power sector, oil and gas, petrochemical, water treatment, process industries, SNL Engineering"
+             CanonicalPath="/sectors" />
+
+    <div class="page-header">
+        <div class="container">
+            <h1>Industry Sectors</h1>
+            <p>Multi-disciplinary engineering expertise across key industrial sectors</p>
+        </div>
+    </div>
+
+    <section class="section">
+        <div class="container">
+            @if (_loading)
+            {
+                <p class="loading">Loading sectors...</p>
+            }
+            else if (_sectors.Count == 0)
+            {
+                <p class="loading">No sectors available. Ensure the API is running at the configured ApiBaseUrl.</p>
+            }
+            else
+            {
+                <div class="card-grid">
+                    @foreach (var sector in _sectors)
+                    {
+                        <article class="service-card">
+                            <a href="/sectors/@sector.Slug" class="service-card-link">
+                                <div class="service-card-img"
+                                    style="background-image: url('@Media.Resolve(sector.CoverImageUrl ?? "/images/news-placeholder.jpg")')">
+                                    @if (sector.IsFeatured)
+                                    {
+                                        <span class="service-badge">Featured</span>
+                                    }
+                                </div>
+                                <div class="service-card-body">
+                                    <h3>@sector.Title</h3>
+                                    @if (!string.IsNullOrEmpty(sector.Subtitle))
+                                    {
+                                        <p>@sector.Subtitle</p>
+                                    }
+                                    <small>@sector.ImageCount gallery images</small>
+                                </div>
+                            </a>
+                        </article>
+                    }
+                </div>
+            }
+        </div>
+    </section>
+}
+
+@code {
+    [Parameter] public string? Slug { get; set; }
+
+    private List<SectorDto> _sectors = [];
+    private SectorDetailDto? _detail;
+    private bool _loading = true;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _loading = true;
+        if (!string.IsNullOrEmpty(Slug))
+        {
+            _detail = await Api.GetAsync<SectorDetailDto>($"api/public/sectors/{Slug}");
+        }
+        else
+        {
+            _sectors = (await Api.GetAsync<List<SectorDto>>("api/public/sectors")) ?? [];
+        }
+        _loading = false;
+    }
+}

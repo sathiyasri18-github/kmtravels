@@ -1,0 +1,37 @@
+<p-toast />
+
+<div class="page-header">
+  <h1>Site Settings</h1>
+  <p-button label="Save Settings" icon="pi pi-save" (onClick)="save()" [loading]="saving" />
+</div>
+
+@if (loading) {
+  <p>Loading settings...</p>
+} @else {
+  <p-card>
+    <div class="form-grid">
+      <div class="field"><label>Association Name</label><input pInputText [(ngModel)]="form.associationName" class="w-full" /></div>
+      <div class="field"><label>Tagline</label><input pInputText [(ngModel)]="form.tagline" class="w-full" /></div>
+      <div class="field"><label>Phone</label><input pInputText [(ngModel)]="form.phone" class="w-full" /></div>
+      <div class="field"><label>Email</label><input pInputText [(ngModel)]="form.email" class="w-full" type="email" /></div>
+      <div class="field full"><label>Address</label><textarea pTextarea [(ngModel)]="form.address" rows="2" class="w-full"></textarea></div>
+      <div class="field full"><label>Google Maps Embed URL</label><input pInputText [(ngModel)]="form.mapEmbedUrl" class="w-full" placeholder="https://www.google.com/maps/embed?..." /></div>
+      <div class="field full">
+        <label>About Content</label>
+        <app-rich-text-editor [(ngModel)]="form.aboutContent" />
+      </div>
+      <div class="field full">
+        <label>Vision</label>
+        <app-rich-text-editor [(ngModel)]="form.vision" height="200px" />
+      </div>
+      <div class="field full">
+        <label>Mission</label>
+        <app-rich-text-editor [(ngModel)]="form.mission" height="200px" />
+      </div>
+      <div class="field full">
+        <label>Objectives</label>
+        <app-rich-text-editor [(ngModel)]="form.objectives" height="200px" />
+      </div>
+    </div>
+  </p-card>
+}

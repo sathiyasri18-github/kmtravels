@@ -1,0 +1,72 @@
+<p-toast />
+<p-confirmDialog />
+
+<div class="page-header">
+  <h1>News Management</h1>
+  <p-button label="Add News" icon="pi pi-plus" (onClick)="openDialog()" />
+</div>
+
+<p-table [value]="news" [paginator]="true" [rows]="10" styleClass="p-datatable-sm">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Title</th>
+      <th>Category</th>
+      <th>Status</th>
+      <th>Date</th>
+      <th style="width: 8rem">Actions</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-item>
+    <tr>
+      <td>{{ item.title }}</td>
+      <td><p-tag [value]="getCategoryLabel(item.category)" /></td>
+      <td>
+        <p-tag [value]="item.isPublished ? 'Published' : 'Draft'"
+               [severity]="item.isPublished ? 'success' : 'warn'" />
+      </td>
+      <td>{{ item.publishedAt | date:'dd MMM yyyy' }}</td>
+      <td>
+        <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" (onClick)="edit(item)" />
+        <p-button icon="pi pi-eye" [rounded]="true" [text]="true" (onClick)="togglePublish(item)" />
+        <p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger" (onClick)="confirmDelete(item)" />
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<p-dialog [(visible)]="dialogVisible" [header]="editItem ? 'Edit News' : 'Add News'"
+          [modal]="true" [style]="{ width: '720px' }" [maximizable]="true">
+  <div class="form-grid">
+    <div class="field">
+      <label>Title</label>
+      <input pInputText [(ngModel)]="form.title" class="w-full" />
+    </div>
+    <div class="field">
+      <label>Category</label>
+      <p-select [options]="categoryOptions" [(ngModel)]="form.category"
+                optionLabel="label" optionValue="value" styleClass="w-full" />
+    </div>
+    <div class="field full">
+      <label>Summary</label>
+      <textarea pTextarea [(ngModel)]="form.summary" rows="2" class="w-full"></textarea>
+    </div>
+    <div class="field full">
+      <label>Content</label>
+      <app-rich-text-editor [(ngModel)]="form.content" />
+    </div>
+    <div class="field full">
+      <app-file-upload label="Featured Image" folder="news" [(url)]="form.imageUrl" />
+    </div>
+    <div class="field">
+      <label>Author</label>
+      <input pInputText [(ngModel)]="form.author" class="w-full" />
+    </div>
+    <div class="field">
+      <p-checkbox [(ngModel)]="form.isPublished" [binary]="true" label="Published" />
+    </div>
+  </div>
+  <ng-template pTemplate="footer">
+    <p-button label="Cancel" severity="secondary" (onClick)="dialogVisible = false" />
+    <p-button label="Save" icon="pi pi-check" (onClick)="save()" [loading]="saving" />
+  </ng-template>
+</p-dialog>

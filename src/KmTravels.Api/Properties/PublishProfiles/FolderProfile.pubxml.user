@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- https://go.microsoft.com/fwlink/?LinkID=208121. -->
+<Project>
+  <PropertyGroup>
+    <_PublishTargetUrl>C:\Development\working folder\snlengineers\src\TNCOA.Api\bin\Release\net8.0\publish\</_PublishTargetUrl>
+    <History>True|2026-06-14T15:47:35.9589624Z||;False|2026-06-14T19:36:35.2061058+05:30||;False|2026-06-14T19:01:26.4618466+05:30||;False|2026-06-14T18:59:46.5254972+05:30||;False|2026-06-14T18:59:31.0093562+05:30||;True|2026-06-14T18:56:48.8845008+05:30||;True|2026-06-14T18:56:29.4848362+05:30||;True|2026-06-14T18:56:25.4503990+05:30||;True|2026-06-14T18:53:12.5990220+05:30||;False|2026-06-14T18:48:44.7175461+05:30||;False|2026-06-14T18:47:37.1982221+05:30||;False|2026-06-14T18:46:33.5314351+05:30||;False|2026-06-14T18:46:08.3403851+05:30||;True|2026-06-14T17:34:03.5143872+05:30||;True|2026-06-14T17:26:50.3840142+05:30||;True|2026-06-14T17:18:47.4050933+05:30||;True|2026-06-14T16:47:50.5970470+05:30||;</History>
+    <LastFailureDetails />
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+  </PropertyGroup>
+</Project>

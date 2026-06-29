@@ -1,0 +1,17 @@
+<p-toast />
+<div class="file-upload">
+  <label>{{ label }}</label>
+  <div class="file-upload-row">
+    <input pInputText [ngModel]="url" (ngModelChange)="onUrlInput($event)" class="flex-1" placeholder="URL or upload a file" />
+    <input #fileInput type="file" [accept]="accept" (change)="onFileSelected($event)" hidden />
+    <p-button
+      [label]="uploading ? 'Uploading...' : 'Upload'"
+      icon="pi pi-upload"
+      [loading]="uploading"
+      [disabled]="uploading"
+      (onClick)="triggerFilePicker()" />
+  </div>
+  @if (previewUrl && accept.includes('image')) {
+    <img [src]="previewUrl" alt="Preview" class="preview" />
+  }
+</div>

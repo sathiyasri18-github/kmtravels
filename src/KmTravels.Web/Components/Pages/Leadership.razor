@@ -1,0 +1,46 @@
+@page "/leadership"
+@inject ApiService Api
+
+<SeoHead Title="Leadership"
+         Description="Meet the experienced technocrats and engineering leaders at SNL Engineering driving EPCM excellence across power, sugar, ethanol and process industries."
+         Keywords="SNL Engineering leadership, engineering directors, technocrats, EPCM team"
+         CanonicalPath="/leadership" />
+
+<div class="page-header">
+    <div class="container">
+        <h1>Leadership</h1>
+        <p>Experienced technocrats driving engineering excellence</p>
+    </div>
+</div>
+
+<section class="section">
+    <div class="container">
+        @foreach (var group in (_bearers ?? []).GroupBy(b => b.Role))
+        {
+            <h2 class="section-title">@group.Key</h2>
+            <div class="bearers-grid">
+                @foreach (var bearer in group.OrderBy(b => b.SortOrder))
+                {
+                    <div class="bearer-card">
+                        <div class="bearer-photo" style="background-image: url('@Media.Resolve(bearer.PhotoUrl ?? "/images/avatar-placeholder.jpg")')"></div>
+                        <h3>@bearer.Name</h3>
+                        <p class="designation">@(bearer.Designation ?? bearer.Role.ToString())</p>
+                        @if (!string.IsNullOrEmpty(bearer.Phone))
+                        {
+                            <p>&#128222; @bearer.Phone</p>
+                        }
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</section>
+
+@code {
+    private List<OfficeBearerDto>? _bearers;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _bearers = (await Api.GetAsync<List<OfficeBearerDto>>("api/public/office-bearers")) ?? [];
+    }
+}

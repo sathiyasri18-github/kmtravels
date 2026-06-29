@@ -1,0 +1,39 @@
+<p-toast />
+<p-confirmDialog />
+
+<div class="page-header">
+  <h1>Contact Inquiries</h1>
+  <p-button label="Refresh" icon="pi pi-refresh" (onClick)="load()" />
+</div>
+
+<p-table [value]="inquiries" [paginator]="true" [rows]="10" styleClass="p-datatable-sm">
+  <ng-template pTemplate="header">
+    <tr><th>Status</th><th>Name</th><th>Subject</th><th>Email</th><th>Date</th><th>Actions</th></tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-item>
+    <tr [class.unread]="!item.isRead">
+      <td><p-tag [value]="item.isRead ? 'Read' : 'Unread'" [severity]="item.isRead ? 'secondary' : 'info'" /></td>
+      <td>{{ item.name }}</td>
+      <td>{{ item.subject }}</td>
+      <td>{{ item.email }}</td>
+      <td>{{ item.createdAt | date:'dd MMM yyyy HH:mm' }}</td>
+      <td>
+        <p-button icon="pi pi-eye" [rounded]="true" [text]="true" (onClick)="view(item)" />
+        @if (!item.isRead) {
+          <p-button icon="pi pi-check" [rounded]="true" [text]="true" (onClick)="markRead(item)" />
+        }
+        <p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger" (onClick)="confirmDelete(item)" />
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<p-dialog [(visible)]="viewDialog" header="Inquiry Details" [modal]="true" [style]="{ width: '500px' }">
+  @if (selected) {
+    <p><strong>From:</strong> {{ selected.name }} ({{ selected.email }})</p>
+    @if (selected.phone) { <p><strong>Phone:</strong> {{ selected.phone }}</p> }
+    <p><strong>Subject:</strong> {{ selected.subject }}</p>
+    <p><strong>Message:</strong></p>
+    <p class="message">{{ selected.message }}</p>
+  }
+</p-dialog>

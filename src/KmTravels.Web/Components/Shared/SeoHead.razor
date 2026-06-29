@@ -1,0 +1,105 @@
+<PageTitle>@FullTitle</PageTitle>
+<HeadContent>
+    @* Description *@
+    @if (!string.IsNullOrEmpty(Description))
+    {
+        <meta name="description" content="@Description" />
+    }
+    @if (!string.IsNullOrEmpty(Keywords))
+    {
+        <meta name="keywords" content="@Keywords" />
+    }
+    @if (NoIndex)
+    {
+        <meta name="robots" content="noindex, nofollow" />
+    }
+    else
+    {
+        <meta name="robots" content="index, follow" />
+    }
+
+    @* Canonical *@
+    <link rel="canonical" href="@CanonicalUrl" />
+
+    @* Open Graph *@
+    <meta property="og:type"        content="@OgType" />
+    <meta property="og:site_name"   content="SNL Engineering" />
+    <meta property="og:title"       content="@(OgTitle ?? Title)" />
+    <meta property="og:url"         content="@CanonicalUrl" />
+    @if (!string.IsNullOrEmpty(Description))
+    {
+        <meta property="og:description" content="@Description" />
+    }
+    @if (!string.IsNullOrEmpty(Image))
+    {
+        <meta property="og:image"       content="@Image" />
+        <meta property="og:image:alt"   content="@(OgTitle ?? Title)" />
+    }
+    else
+    {
+        <meta property="og:image" content="@(BaseUrl)images/og-default.jpg" />
+    }
+
+    @* Twitter Card *@
+    <meta name="twitter:card"        content="@(string.IsNullOrEmpty(Image) ? "summary" : "summary_large_image")" />
+    <meta name="twitter:title"       content="@(OgTitle ?? Title)" />
+    @if (!string.IsNullOrEmpty(Description))
+    {
+        <meta name="twitter:description" content="@Description" />
+    }
+    @if (!string.IsNullOrEmpty(Image))
+    {
+        <meta name="twitter:image" content="@Image" />
+    }
+
+    @* JSON-LD structured data *@
+    @if (!string.IsNullOrEmpty(JsonLd))
+    {
+        <script type="application/ld+json">@((MarkupString)JsonLd)</script>
+    }
+</HeadContent>
+
+@code {
+    [Inject] private NavigationManager Nav { get; set; } = default!;
+
+    /// <summary>Short title shown in browser tab and after site suffix.</summary>
+    [Parameter, EditorRequired] public string Title { get; set; } = "";
+
+    /// <summary>Override the full &lt;title&gt; tag. Defaults to "{Title} | SNL Engineering".</summary>
+    [Parameter] public string? FullTitleOverride { get; set; }
+
+    [Parameter] public string? Description { get; set; }
+    [Parameter] public string? Keywords    { get; set; }
+    [Parameter] public string? Image       { get; set; }
+
+    /// <summary>Override canonical path. Defaults to current URL.</summary>
+    [Parameter] public string? CanonicalPath { get; set; }
+
+    /// <summary>og:type — defaults to "website". Use "article" for news/blog posts.</summary>
+    [Parameter] public string OgType { get; set; } = "website";
+
+    /// <summary>Override og:title separately from page title.</summary>
+    [Parameter] public string? OgTitle { get; set; }
+
+    [Parameter] public bool NoIndex { get; set; }
+
+    /// <summary>Raw JSON-LD string injected as application/ld+json script.</summary>
+    [Parameter] public string? JsonLd { get; set; }
+
+    private string FullTitle =>
+        FullTitleOverride ?? (string.IsNullOrEmpty(Title) ? "SNL Engineering" : $"{Title} | SNL Engineering");
+
+    private string BaseUrl
+    {
+        get
+        {
+            var uri = new Uri(Nav.BaseUri);
+            return $"{uri.Scheme}://{uri.Host}{(uri.IsDefaultPort ? "" : $":{uri.Port}")}/";
+        }
+    }
+
+    private string CanonicalUrl =>
+        string.IsNullOrEmpty(CanonicalPath)
+            ? Nav.Uri.Split('?')[0].TrimEnd('/')
+            : $"{BaseUrl.TrimEnd('/')}{CanonicalPath}";
+}

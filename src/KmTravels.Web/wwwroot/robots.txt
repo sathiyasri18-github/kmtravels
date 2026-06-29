@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+Disallow: /project-inquiry
+Disallow: /membership
+Disallow: /privacy
+Disallow: /privacy-notice
+Disallow: /cookies
+Disallow: /cookie-notice
+
+Sitemap: https://snlengineers.com/sitemap.xml

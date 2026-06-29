@@ -1,0 +1,82 @@
+@page "/projects"
+@page "/projects/{AlbumId:int}"
+@page "/gallery"
+@page "/gallery/{AlbumId:int}"
+@inject ApiService Api
+@inject IJSRuntime JS
+
+<SeoHead Title="Projects"
+         Description="Browse SNL Engineering's delivered projects across power, sugar, ethanol and process industries — a portfolio of multi-disciplinary EPCM engineering achievements."
+         Keywords="SNL Engineering projects, engineering portfolio, EPCM projects, delivered projects India"
+         CanonicalPath="/projects" />
+
+@if (AlbumId > 0)
+{
+    <div class="page-header">
+        <div class="container">
+            <a href="/projects" class="back-link">← Back to Projects</a>
+            <h1>@(_detail?.Album?.Title ?? "Project")</h1>
+            <p>@_detail?.Album?.Description</p>
+        </div>
+    </div>
+    <section class="section">
+        <div class="container">
+            <div class="gallery-grid">
+                @foreach (var img in _detail?.Images ?? [])
+                {
+                    <div class="gallery-item" @onclick="() => OpenImage(Media.Resolve(img.ImageUrl))">
+                        <img src="@Media.Resolve(img.ImageUrl)" alt="@img.Title" loading="lazy" />
+                        <span>@img.Title</span>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+}
+else
+{
+    <div class="page-header">
+        <div class="container">
+            <h1>Projects</h1>
+            <p>Selected engineering and construction projects delivered across India</p>
+        </div>
+    </div>
+    <section class="section">
+        <div class="container card-grid">
+            @foreach (var album in _albums ?? [])
+            {
+                <a href="/projects/@album.Id" class="album-card">
+                    <div class="album-cover" style="background-image: url('@Media.Resolve(album.CoverImageUrl ?? "/images/gallery-placeholder.jpg")')">
+                        <span class="image-count">@album.ImageCount photos</span>
+                    </div>
+                    <div class="album-info">
+                        <h3>@album.Title</h3>
+                        <p>@album.Category</p>
+                        <small>@(album.EventDate?.ToString("dd MMM yyyy"))</small>
+                    </div>
+                </a>
+            }
+        </div>
+    </section>
+}
+
+@code {
+    [Parameter] public int AlbumId { get; set; }
+
+    private List<GalleryAlbumDto>? _albums;
+    private GalleryDetailData? _detail;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (AlbumId > 0)
+        {
+            _detail = await Api.GetAsync<GalleryDetailData>($"api/public/gallery/{AlbumId}");
+        }
+        else
+        {
+            _albums = await Api.GetAsync<List<GalleryAlbumDto>>("api/public/gallery");
+        }
+    }
+
+    private async Task OpenImage(string url) => await JS.InvokeVoidAsync("open", url, "_blank");
+}

@@ -1,0 +1,39 @@
+<p-toast />
+<p-confirmDialog />
+
+<div class="page-header">
+  <h1>Banner Slides</h1>
+  <p-button label="Add Banner" icon="pi pi-plus" (onClick)="openDialog()" />
+</div>
+
+<p-table [value]="banners" styleClass="p-datatable-sm">
+  <ng-template pTemplate="header">
+    <tr><th>Title</th><th>Subtitle</th><th>Order</th><th>Preview</th><th>Actions</th></tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-item>
+    <tr>
+      <td>{{ item.title }}</td>
+      <td>{{ item.subtitle || '-' }}</td>
+      <td>{{ item.sortOrder }}</td>
+      <td>@if (item.imageUrl) { <img [src]="item.imageUrl" class="thumb" alt="" /> }</td>
+      <td>
+        <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" (onClick)="edit(item)" />
+        <p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger" (onClick)="confirmDelete(item)" />
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<p-dialog [(visible)]="dialogVisible" [header]="editItem ? 'Edit Banner' : 'Add Banner'" [modal]="true" [style]="{ width: '600px' }">
+  <div class="form-grid">
+    <div class="field"><label>Title</label><input pInputText [(ngModel)]="form.title" class="w-full" /></div>
+    <div class="field"><label>Sort Order</label><p-inputNumber [(ngModel)]="form.sortOrder" styleClass="w-full" /></div>
+    <div class="field full"><label>Subtitle</label><input pInputText [(ngModel)]="form.subtitle" class="w-full" /></div>
+    <div class="field full"><label>Link URL</label><input pInputText [(ngModel)]="form.linkUrl" class="w-full" /></div>
+    <div class="field full"><app-file-upload label="Banner Image" folder="banners" [(url)]="form.imageUrl" /></div>
+  </div>
+  <ng-template pTemplate="footer">
+    <p-button label="Cancel" severity="secondary" (onClick)="dialogVisible = false" />
+    <p-button label="Save" (onClick)="save()" [loading]="saving" />
+  </ng-template>
+</p-dialog>
