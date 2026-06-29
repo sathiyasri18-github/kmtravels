@@ -1,8 +1,8 @@
-using SnlEngineering.Core.DTOs;
-using SnlEngineering.Core.Entities;
-using SnlEngineering.Core.Enums;
+using KmTravels.Core.DTOs;
+using KmTravels.Core.Entities;
+using KmTravels.Core.Enums;
 
-namespace SnlEngineering.Core.Interfaces;
+namespace KmTravels.Core.Interfaces;
 
 public interface ICacheService
 {

@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 
-namespace SnlEngineering.Core.Entities;
+namespace KmTravels.Core.Entities;
 
 public class ApplicationUser : IdentityUser
 {

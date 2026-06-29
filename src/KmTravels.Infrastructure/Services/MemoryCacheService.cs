@@ -1,9 +1,9 @@
 using System.Collections.Concurrent;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
-using SnlEngineering.Core.Interfaces;
+using KmTravels.Core.Interfaces;
 
-namespace SnlEngineering.Infrastructure.Services;
+namespace KmTravels.Infrastructure.Services;
 
 public class MemoryCacheService : ICacheService
 {

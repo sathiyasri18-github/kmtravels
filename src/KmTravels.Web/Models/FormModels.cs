@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
-using SnlEngineering.Core.Enums;
+using KmTravels.Core.Enums;
 
-namespace SnlEngineering.Web.Models;
+namespace KmTravels.Web.Models;
 
 public class MemberFormModel
 {

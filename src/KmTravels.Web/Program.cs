@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.AspNetCore.StaticFiles;
-using SnlEngineering.Web.Components;
-using SnlEngineering.Web.Services;
+using KmTravels.Web.Components;
+using KmTravels.Web.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

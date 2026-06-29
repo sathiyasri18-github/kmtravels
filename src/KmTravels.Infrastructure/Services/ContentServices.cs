@@ -1,12 +1,12 @@
 using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore;
-using SnlEngineering.Core.DTOs;
-using SnlEngineering.Core.Entities;
-using SnlEngineering.Core.Enums;
-using SnlEngineering.Core.Interfaces;
-using SnlEngineering.Infrastructure.Data;
+using KmTravels.Core.DTOs;
+using KmTravels.Core.Entities;
+using KmTravels.Core.Enums;
+using KmTravels.Core.Interfaces;
+using KmTravels.Infrastructure.Data;
 
-namespace SnlEngineering.Infrastructure.Services;
+namespace KmTravels.Infrastructure.Services;
 
 public partial class ContentServices
 {

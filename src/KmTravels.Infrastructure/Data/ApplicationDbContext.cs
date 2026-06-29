@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using SnlEngineering.Core.Entities;
+using KmTravels.Core.Entities;
 
-namespace SnlEngineering.Infrastructure.Data;
+namespace KmTravels.Infrastructure.Data;
 
 public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 {

@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SnlEngineering.Core.DTOs;
-using SnlEngineering.Core.Interfaces;
+using KmTravels.Core.DTOs;
+using KmTravels.Core.Interfaces;
 
-namespace SnlEngineering.Api.Controllers;
+namespace KmTravels.Api.Controllers;
 
 [ApiController]
 [Route("api/admin/upload")]

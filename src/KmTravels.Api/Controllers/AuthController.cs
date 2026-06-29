@@ -4,10 +4,10 @@ using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using SnlEngineering.Core.DTOs;
-using SnlEngineering.Core.Entities;
+using KmTravels.Core.DTOs;
+using KmTravels.Core.Entities;
 
-namespace SnlEngineering.Api.Controllers;
+namespace KmTravels.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]

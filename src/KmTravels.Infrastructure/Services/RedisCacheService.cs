@@ -1,9 +1,9 @@
 using System.Text.Json;
 using Microsoft.Extensions.Logging;
 using StackExchange.Redis;
-using SnlEngineering.Core.Interfaces;
+using KmTravels.Core.Interfaces;
 
-namespace SnlEngineering.Infrastructure.Services;
+namespace KmTravels.Infrastructure.Services;
 
 public class RedisCacheService : ICacheService
 {

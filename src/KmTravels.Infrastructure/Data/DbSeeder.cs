@@ -1,11 +1,11 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using SnlEngineering.Core.Entities;
-using SnlEngineering.Core.Enums;
-using SnlEngineering.Core.Interfaces;
+using KmTravels.Core.Entities;
+using KmTravels.Core.Enums;
+using KmTravels.Core.Interfaces;
 
-namespace SnlEngineering.Infrastructure.Data;
+namespace KmTravels.Infrastructure.Data;
 
 public static class DbSeeder
 {
@@ -25,12 +25,12 @@ public static class DbSeeder
                 await roleManager.CreateAsync(new IdentityRole(role));
         }
 
-        if (await userManager.FindByEmailAsync("admin@snlengineering.com") == null)
+        if (await userManager.FindByEmailAsync("admin@KmTravels.com") == null)
         {
             var admin = new ApplicationUser
             {
-                UserName = "admin@snlengineering.com",
-                Email = "admin@snlengineering.com",
+                UserName = "admin@KmTravels.com",
+                Email = "admin@KmTravels.com",
                 FullName = "Super Administrator",
                 EmailConfirmed = true
             };
@@ -45,7 +45,7 @@ public static class DbSeeder
                 new SiteSetting { Key = "Tagline", Value = "Concept-to-Commissioning EPCM Engineering Consultants" },
                 new SiteSetting { Key = "Address", Value = "Chennai, Tamil Nadu, India" },
                 new SiteSetting { Key = "Phone", Value = "+91 44 4598 1200" },
-                new SiteSetting { Key = "Email", Value = "info@snlengineering.com" },
+                new SiteSetting { Key = "Email", Value = "info@KmTravels.com" },
                 new SiteSetting { Key = "AboutContent", Value = "SNL Engineering is a premier engineering consultancy offering end-to-end EPCM (Engineering, Procurement and Construction Management) services. We guide industrial projects from initial concept through final commissioning across power, sugar, ethanol, chemical, and process industries." },
                 new SiteSetting { Key = "Vision", Value = "To be among the top engineering consultants in India, delivering innovative, energy-efficient, and environmentally friendly engineering solutions under one roof." },
                 new SiteSetting { Key = "Mission", Value = "To provide total engineering solutions in all disciplines for complete project implementation — from Conceptual System Design and Techno-Economic Feasibility Reports to Detailed Engineering, Project Management, and Commissioning assistance." },

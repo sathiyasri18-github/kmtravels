@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using SnlEngineering.Core.Entities;
-using SnlEngineering.Core.Enums;
-using SnlEngineering.Infrastructure;
-using SnlEngineering.Infrastructure.Data;
+using KmTravels.Core.Entities;
+using KmTravels.Core.Enums;
+using KmTravels.Infrastructure;
+using KmTravels.Infrastructure.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,7 +30,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 .AddEntityFrameworkStores<ApplicationDbContext>()
 .AddDefaultTokenProviders();
 
-var jwtKey = builder.Configuration["Jwt:Key"] ?? "SnlEngineering-Super-Secret-Key-Change-In-Production-2026!";
+var jwtKey = builder.Configuration["Jwt:Key"] ?? "KmTravels-Super-Secret-Key-Change-In-Production-2026!";
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -44,8 +44,8 @@ builder.Services.AddAuthentication(options =>
         ValidateAudience = true,
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
-        ValidIssuer = builder.Configuration["Jwt:Issuer"] ?? "SnlEngineering.Api",
-        ValidAudience = builder.Configuration["Jwt:Audience"] ?? "SnlEngineering.Admin",
+        ValidIssuer = builder.Configuration["Jwt:Issuer"] ?? "KmTravels.Api",
+        ValidAudience = builder.Configuration["Jwt:Audience"] ?? "KmTravels.Admin",
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
     };
 });
@@ -60,7 +60,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "SnlEngineering API", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "KmTravels API", Version = "v1" });
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Description = "JWT Authorization header using the Bearer scheme.",

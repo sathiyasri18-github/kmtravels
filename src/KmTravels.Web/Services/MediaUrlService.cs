@@ -1,4 +1,4 @@
-namespace SnlEngineering.Web.Services;
+namespace KmTravels.Web.Services;
 
 /// <summary>
 /// Resolves uploaded file paths (/uploads/...) to the API server origin.

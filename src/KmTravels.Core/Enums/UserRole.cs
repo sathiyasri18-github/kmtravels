@@ -1,4 +1,4 @@
-namespace SnlEngineering.Core.Enums;
+namespace KmTravels.Core.Enums;
 
 public static class UserRoles
 {

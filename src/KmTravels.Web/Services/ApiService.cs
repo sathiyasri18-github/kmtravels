@@ -1,9 +1,9 @@
 using System.Net.Http.Json;
 using System.Text.Json;
-using SnlEngineering.Core.DTOs;
-using SnlEngineering.Core.Enums;
+using KmTravels.Core.DTOs;
+using KmTravels.Core.Enums;
 
-namespace SnlEngineering.Web.Services;
+namespace KmTravels.Web.Services;
 
 public class ApiService
 {

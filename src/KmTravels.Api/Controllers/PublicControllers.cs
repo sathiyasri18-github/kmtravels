@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SnlEngineering.Core.DTOs;
-using SnlEngineering.Core.Enums;
-using SnlEngineering.Core.Interfaces;
+using KmTravels.Core.DTOs;
+using KmTravels.Core.Enums;
+using KmTravels.Core.Interfaces;
 
-namespace SnlEngineering.Api.Controllers;
+namespace KmTravels.Api.Controllers;
 
 [ApiController]
 [Route("api/public")]

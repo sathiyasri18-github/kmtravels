@@ -1,6 +1,6 @@
-using SnlEngineering.Core.Enums;
+using KmTravels.Core.Enums;
 
-namespace SnlEngineering.Core.Entities;
+namespace KmTravels.Core.Entities;
 
 public class NewsArticle : BaseEntity
 {

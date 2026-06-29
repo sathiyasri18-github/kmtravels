@@ -2,7 +2,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using StackExchange.Redis;
 
-namespace SnlEngineering.Infrastructure;
+namespace KmTravels.Infrastructure;
 
 internal static class RedisConfiguration
 {

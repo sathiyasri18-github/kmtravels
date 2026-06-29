@@ -1,4 +1,4 @@
-namespace SnlEngineering.Core.Entities;
+namespace KmTravels.Core.Entities;
 
 public abstract class BaseEntity
 {

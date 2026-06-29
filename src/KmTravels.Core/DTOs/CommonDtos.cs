@@ -1,6 +1,6 @@
-using SnlEngineering.Core.Enums;
+using KmTravels.Core.Enums;
 
-namespace SnlEngineering.Core.DTOs;
+namespace KmTravels.Core.DTOs;
 
 public record PagedResult<T>(IReadOnlyList<T> Items, int TotalCount, int Page, int PageSize);
 

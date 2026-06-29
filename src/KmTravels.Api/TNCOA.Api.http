@@ -1,6 +1,6 @@
-@TNCOA.Api_HostAddress = http://localhost:5224
+@KmTravels.Api_HostAddress = http://localhost:5224
 
-GET {{TNCOA.Api_HostAddress}}/weatherforecast/
+GET {{KmTravels.Api_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###

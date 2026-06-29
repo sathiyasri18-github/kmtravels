@@ -2,11 +2,11 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
-using SnlEngineering.Infrastructure.Data;
+using KmTravels.Infrastructure.Data;
 
 #nullable disable
 
-namespace SnlEngineering.Infrastructure.Data.Migrations;
+namespace KmTravels.Infrastructure.Data.Migrations;
 
 [DbContext(typeof(ApplicationDbContext))]
 [Migration("20260613180000_AddServiceOfferings")]

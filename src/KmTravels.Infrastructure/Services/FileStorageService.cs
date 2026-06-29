@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using SnlEngineering.Core.Interfaces;
+using KmTravels.Core.Interfaces;
 
-namespace SnlEngineering.Infrastructure.Services;
+namespace KmTravels.Infrastructure.Services;
 
 public class FileStorageService : IFileStorageService
 {

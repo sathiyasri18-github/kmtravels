@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using SnlEngineering.Infrastructure.Data;
+using KmTravels.Infrastructure.Data;
 
 #nullable disable
 
-namespace SnlEngineering.Infrastructure.Data.Migrations
+namespace KmTravels.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     [Migration("20260614082615_AddSectors")]
@@ -158,7 +158,7 @@ namespace SnlEngineering.Infrastructure.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("SnlEngineering.Core.Entities.Advertisement", b =>
+            modelBuilder.Entity("KmTravels.Core.Entities.Advertisement", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -203,7 +203,7 @@ namespace SnlEngineering.Infrastructure.Data.Migrations
                     b.ToTable("Advertisements");
                 });
 
-            modelBuilder.Entity("SnlEngineering.Core.Entities.ApplicationUser", b =>
+            modelBuilder.Entity("KmTravels.Core.Entities.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -284,7 +284,7 @@ namespace SnlEngineering.Infrastructure.Data.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("SnlEngineering.Core.Entities.BannerSlide", b =>
+            modelBuilder.Entity("KmTravels.Core.Entities.BannerSlide", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -323,7 +323,7 @@ namespace SnlEngineering.Infrastructure.Data.Migrations
                     b.ToTable("BannerSlides");
                 });
 
-            modelBuilder.Entity("SnlEngineering.Core.Entities.ContactInquiry", b =>
+            modelBuilder.Entity("KmTravels.Core.Entities.ContactInquiry", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -370,7 +370,7 @@ namespace SnlEngineering.Infrastructure.Data.Migrations
                     b.ToTable("ContactInquiries");
                 });
 
-            modelBuilder.Entity("SnlEngineering.Core.Entities.DynamicPage", b =>
+            modelBuilder.Entity("KmTravels.Core.Entities.DynamicPage", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -416,7 +416,7 @@ namespace SnlEngineering.Infrastructure.Data.Migrations
                     b.ToTable("DynamicPages");
                 });
 
-            modelBuilder.Entity("SnlEngineering.Core.Entities.EventItem", b =>
+            modelBuilder.Entity("KmTravels.Core.Entities.EventItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -460,7 +460,7 @@ namespace SnlEngineering.Infrastructure.Data.Migrations
                     b.ToTable("Events");
                 });
 
-            modelBuilder.Entity("SnlEngineering.Core.Entities.GalleryAlbum", b =>
+            modelBuilder.Entity("KmTravels.Core.Entities.GalleryAlbum", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -499,7 +499,7 @@ namespace SnlEngineering.Infrastructure.Data.Migrations
                     b.ToTable("GalleryAlbums");
                 });
 
-            modelBuilder.Entity("SnlEngineering.Core.Entities.GalleryImage", b =>
+            modelBuilder.Entity("KmTravels.Core.Entities.GalleryImage", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -540,7 +540,7 @@ namespace SnlEngineering.Infrastructure.Data.Migrations
                     b.ToTable("GalleryImages");
                 });
 
-            modelBuilder.Entity("SnlEngineering.Core.Entities.MemberRegistration", b =>
+            modelBuilder.Entity("KmTravels.Core.Entities.MemberRegistration", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -613,7 +613,7 @@ namespace SnlEngineering.Infrastructure.Data.Migrations
                     b.ToTable("MemberRegistrations");
                 });
 
-            modelBuilder.Entity("SnlEngineering.Core.Entities.MenuItem", b =>
+            modelBuilder.Entity("KmTravels.Core.Entities.MenuItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -653,7 +653,7 @@ namespace SnlEngineering.Infrastructure.Data.Migrations
                     b.ToTable("MenuItems");
                 });
 
-            modelBuilder.Entity("SnlEngineering.Core.Entities.NewsArticle", b =>
+            modelBuilder.Entity("KmTravels.Core.Entities.NewsArticle", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -713,7 +713,7 @@ namespace SnlEngineering.Infrastructure.Data.Migrations
                     b.ToTable("NewsArticles");
                 });
 
-            modelBuilder.Entity("SnlEngineering.Core.Entities.OfficeBearer", b =>
+            modelBuilder.Entity("KmTravels.Core.Entities.OfficeBearer", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -763,7 +763,7 @@ namespace SnlEngineering.Infrastructure.Data.Migrations
                     b.ToTable("OfficeBearers");
                 });
 
-            modelBuilder.Entity("SnlEngineering.Core.Entities.Publication", b =>
+            modelBuilder.Entity("KmTravels.Core.Entities.Publication", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -811,7 +811,7 @@ namespace SnlEngineering.Infrastructure.Data.Migrations
                     b.ToTable("Publications");
                 });
 
-            modelBuilder.Entity("SnlEngineering.Core.Entities.Sector", b =>
+            modelBuilder.Entity("KmTravels.Core.Entities.Sector", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -877,7 +877,7 @@ namespace SnlEngineering.Infrastructure.Data.Migrations
                     b.ToTable("Sectors");
                 });
 
-            modelBuilder.Entity("SnlEngineering.Core.Entities.SectorImage", b =>
+            modelBuilder.Entity("KmTravels.Core.Entities.SectorImage", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -918,7 +918,7 @@ namespace SnlEngineering.Infrastructure.Data.Migrations
                     b.ToTable("SectorImages");
                 });
 
-            modelBuilder.Entity("SnlEngineering.Core.Entities.ServiceImage", b =>
+            modelBuilder.Entity("KmTravels.Core.Entities.ServiceImage", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -959,7 +959,7 @@ namespace SnlEngineering.Infrastructure.Data.Migrations
                     b.ToTable("ServiceImages");
                 });
 
-            modelBuilder.Entity("SnlEngineering.Core.Entities.ServiceOffering", b =>
+            modelBuilder.Entity("KmTravels.Core.Entities.ServiceOffering", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1028,7 +1028,7 @@ namespace SnlEngineering.Infrastructure.Data.Migrations
                     b.ToTable("ServiceOfferings");
                 });
 
-            modelBuilder.Entity("SnlEngineering.Core.Entities.SiteSetting", b =>
+            modelBuilder.Entity("KmTravels.Core.Entities.SiteSetting", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1064,7 +1064,7 @@ namespace SnlEngineering.Infrastructure.Data.Migrations
                     b.ToTable("SiteSettings");
                 });
 
-            modelBuilder.Entity("SnlEngineering.Core.Entities.VideoItem", b =>
+            modelBuilder.Entity("KmTravels.Core.Entities.VideoItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1111,7 +1111,7 @@ namespace SnlEngineering.Infrastructure.Data.Migrations
                     b.ToTable("Videos");
                 });
 
-            modelBuilder.Entity("SnlEngineering.Core.Entities.VisitorStat", b =>
+            modelBuilder.Entity("KmTravels.Core.Entities.VisitorStat", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1153,7 +1153,7 @@ namespace SnlEngineering.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("SnlEngineering.Core.Entities.ApplicationUser", null)
+                    b.HasOne("KmTravels.Core.Entities.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1162,7 +1162,7 @@ namespace SnlEngineering.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("SnlEngineering.Core.Entities.ApplicationUser", null)
+                    b.HasOne("KmTravels.Core.Entities.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1177,7 +1177,7 @@ namespace SnlEngineering.Infrastructure.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SnlEngineering.Core.Entities.ApplicationUser", null)
+                    b.HasOne("KmTravels.Core.Entities.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1186,16 +1186,16 @@ namespace SnlEngineering.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("SnlEngineering.Core.Entities.ApplicationUser", null)
+                    b.HasOne("KmTravels.Core.Entities.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SnlEngineering.Core.Entities.GalleryImage", b =>
+            modelBuilder.Entity("KmTravels.Core.Entities.GalleryImage", b =>
                 {
-                    b.HasOne("SnlEngineering.Core.Entities.GalleryAlbum", "Album")
+                    b.HasOne("KmTravels.Core.Entities.GalleryAlbum", "Album")
                         .WithMany("Images")
                         .HasForeignKey("AlbumId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1204,9 +1204,9 @@ namespace SnlEngineering.Infrastructure.Data.Migrations
                     b.Navigation("Album");
                 });
 
-            modelBuilder.Entity("SnlEngineering.Core.Entities.MenuItem", b =>
+            modelBuilder.Entity("KmTravels.Core.Entities.MenuItem", b =>
                 {
-                    b.HasOne("SnlEngineering.Core.Entities.MenuItem", "Parent")
+                    b.HasOne("KmTravels.Core.Entities.MenuItem", "Parent")
                         .WithMany("Children")
                         .HasForeignKey("ParentId")
                         .OnDelete(DeleteBehavior.Restrict);
@@ -1214,9 +1214,9 @@ namespace SnlEngineering.Infrastructure.Data.Migrations
                     b.Navigation("Parent");
                 });
 
-            modelBuilder.Entity("SnlEngineering.Core.Entities.SectorImage", b =>
+            modelBuilder.Entity("KmTravels.Core.Entities.SectorImage", b =>
                 {
-                    b.HasOne("SnlEngineering.Core.Entities.Sector", "Sector")
+                    b.HasOne("KmTravels.Core.Entities.Sector", "Sector")
                         .WithMany("Images")
                         .HasForeignKey("SectorId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1225,9 +1225,9 @@ namespace SnlEngineering.Infrastructure.Data.Migrations
                     b.Navigation("Sector");
                 });
 
-            modelBuilder.Entity("SnlEngineering.Core.Entities.ServiceImage", b =>
+            modelBuilder.Entity("KmTravels.Core.Entities.ServiceImage", b =>
                 {
-                    b.HasOne("SnlEngineering.Core.Entities.ServiceOffering", "Service")
+                    b.HasOne("KmTravels.Core.Entities.ServiceOffering", "Service")
                         .WithMany("Images")
                         .HasForeignKey("ServiceId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1236,22 +1236,22 @@ namespace SnlEngineering.Infrastructure.Data.Migrations
                     b.Navigation("Service");
                 });
 
-            modelBuilder.Entity("SnlEngineering.Core.Entities.GalleryAlbum", b =>
+            modelBuilder.Entity("KmTravels.Core.Entities.GalleryAlbum", b =>
                 {
                     b.Navigation("Images");
                 });
 
-            modelBuilder.Entity("SnlEngineering.Core.Entities.MenuItem", b =>
+            modelBuilder.Entity("KmTravels.Core.Entities.MenuItem", b =>
                 {
                     b.Navigation("Children");
                 });
 
-            modelBuilder.Entity("SnlEngineering.Core.Entities.Sector", b =>
+            modelBuilder.Entity("KmTravels.Core.Entities.Sector", b =>
                 {
                     b.Navigation("Images");
                 });
 
-            modelBuilder.Entity("SnlEngineering.Core.Entities.ServiceOffering", b =>
+            modelBuilder.Entity("KmTravels.Core.Entities.ServiceOffering", b =>
                 {
                     b.Navigation("Images");
                 });

@@ -2,11 +2,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using SnlEngineering.Core.Interfaces;
-using SnlEngineering.Infrastructure.Data;
-using SnlEngineering.Infrastructure.Services;
+using KmTravels.Core.Interfaces;
+using KmTravels.Infrastructure.Data;
+using KmTravels.Infrastructure.Services;
 
-namespace SnlEngineering.Infrastructure;
+namespace KmTravels.Infrastructure;
 
 public static class DependencyInjection
 {

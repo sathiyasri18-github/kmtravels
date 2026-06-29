@@ -1,11 +1,11 @@
 using Microsoft.EntityFrameworkCore;
-using SnlEngineering.Core.DTOs;
-using SnlEngineering.Core.Entities;
-using SnlEngineering.Core.Enums;
-using SnlEngineering.Core.Interfaces;
-using SnlEngineering.Infrastructure.Data;
+using KmTravels.Core.DTOs;
+using KmTravels.Core.Entities;
+using KmTravels.Core.Enums;
+using KmTravels.Core.Interfaces;
+using KmTravels.Infrastructure.Data;
 
-namespace SnlEngineering.Infrastructure.Services;
+namespace KmTravels.Infrastructure.Services;
 
 public class AdvertisementService : IAdvertisementService
 {
@@ -470,7 +470,7 @@ public class SiteSettingsService : ISiteSettingsService
             settings.GetValueOrDefault("Tagline", "Uniting Cable TV Operators Across Tamil Nadu"),
             settings.GetValueOrDefault("Address", "Chennai, Tamil Nadu, India"),
             settings.GetValueOrDefault("Phone", "+91-44-00000000"),
-            settings.GetValueOrDefault("Email", "info@SnlEngineering.org"),
+            settings.GetValueOrDefault("Email", "info@KmTravels.org"),
             settings.GetValueOrDefault("MapEmbedUrl", null),
             settings.GetValueOrDefault("AboutContent", null),
             settings.GetValueOrDefault("Vision", null),
